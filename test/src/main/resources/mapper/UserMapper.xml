@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mab.merchantsystem.user.UserMapper">
+	<!-- User Table Mapping -->
+	<resultMap id="UserResultMap" type="com.mab.merchantsystem.user.User">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="NAME" jdbcType="NVARCHAR" property="name" />
+		<result column="POINT" jdbcType="INTEGER" property="point"/>
+		<result column="USER_LEVEL" jdbcType="VARCHAR" property="userLevel"/>
+	</resultMap>
+
+	<!-- Insert User -->
+	<insert id="insertUser" parameterType="com.mab.merchantsystem.user.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO [USER]
+			(NAME,POINT,USER_LEVEL) values (#{name},#{point},#{userLevel})
+	</insert>
+
+	<!-- Select All Users -->
+	<select id="showAllUser" resultMap="UserResultMap">
+		SELECT
+			[USER].ID AS ID,
+			[USER].NAME AS NAME,
+			[USER].POINT AS POINT,
+			[USER].USER_LEVEL AS USER_LEVEL
+		FROM [USER]
+	</select>
+
+	<!-- Select User by Id -->
+	<select id="selectUserById" resultMap="UserResultMap">
+		SELECT 
+			[USER].ID AS ID,
+			[USER].NAME AS NAME,
+			[USER].POINT AS POINT,
+			[USER].USER_LEVEL AS USER_LEVEL
+		FROM [USER]
+		<where>
+			 [USER].ID = #{id}
+		</where>
+	</select>
+
+	<!-- Select User by Code -->
+	<select id="selectUserByCode" resultMap="UserResultMap">
+		SELECT 
+			[USER].ID AS ID,
+			[USER].NAME AS NAME,
+			[USER].POINT AS POINT,
+			[USER].USER_LEVEL AS USER_LEVEL
+		FROM [USER]
+		<where>
+			 [USER].CODE = #{code}
+		</where>
+	</select>
+
+	<!-- Update User by Id -->
+	<update id="updateUser">
+		UPDATE [USER] 
+		SET 
+			[USER].NAME AS NAME,
+			[USER].POINT AS POINT,
+			[USER].USER_LEVEL AS USER_LEVEL
+		<where>
+			 [USER].ID = #{id}
+		</where>
+	</update>
+
+	<!-- Delete User by Id -->
+	<delete id="deleteUser">
+		delete from [USER] where [USER].ID = #{id}
+	</delete>
+</mapper>
